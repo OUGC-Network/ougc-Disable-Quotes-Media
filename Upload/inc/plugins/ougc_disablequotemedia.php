@@ -34,11 +34,27 @@ defined('IN_MYBB') or die('This file cannot be accessed directly.');
 if(!defined('IN_ADMINCP'))
 {
 	$plugins->add_hook('parse_message_me_mycode','ougc_disablequotemedia_parser');
+
+	global $templatelist;
+
+	if(isset($templatelist))
+	{
+		$templatelist .= ',';
+	}
+	else
+	{
+		$templatelist = '';
+	}
+
+	$templatelist .= 'ougcdisablequotemedia';
 }
 
 define('OUGC_DISABLEQUOTEMEDIA_PATTERN', "#\[quote\](.*?)\[\/quote\](\r\n?|\n?)#si");
 
 define('OUGC_DISABLEQUOTEMEDIA_PATTERN_COMPLEX', "#\[quote=([\"']|&quot;|)(.*?)(?:\\1)(.*?)(?:[\"']|&quot;)?\](.*?)\[/quote\](\r\n?|\n?)#si");
+
+// PLUGINLIBRARY
+defined('PLUGINLIBRARY') or define('PLUGINLIBRARY', MYBB_ROOT.'inc/plugins/pluginlibrary.php');
 
 // Plugin API
 function ougc_disablequotemedia_info()
@@ -54,6 +70,79 @@ function ougc_disablequotemedia_info()
 		'compatibility'	=> '18*',
 		'codename'		=> 'ougc_ougc_disablequotemedia'
 	);
+}
+
+// This function runs when the plugin is activated.
+function ougc_disablequotemedia_activate()
+{
+	global $PL, $cache;
+
+	$PL || require_once PLUGINLIBRARY;
+
+	// Add template group
+	$PL->templates('ougcdisablequotemedia', 'OUGC Disable Quotes Media', array(
+		'' => '<blockquote class="mycode_quote"><cite>{$lang->quote}</cite>$1</blockquote><br />',
+	));
+
+	// Insert/update version into cache
+	$plugins = $cache->read('ougc_plugins');
+
+	if(!$plugins)
+	{
+		$plugins = array();
+	}
+
+	$info = ougc_disablequotemedia_info();
+
+	if(!isset($plugins['disablequotemedia']))
+	{
+		$plugins['disablequotemedia'] = $info['versioncode'];
+	}
+
+	/*~*~* RUN UPDATES START *~*~*/
+
+	/*~*~* RUN UPDATES END *~*~*/
+
+	$plugins['disablequotemedia'] = $info['versioncode'];
+
+	$cache->update('ougc_plugins', $plugins);
+}
+
+// Checks to make sure plugin is installed
+function ougc_disablequotemedia_is_installed()
+{
+	global $cache;
+
+	$plugins = (array)$cache->read('ougc_plugins');
+
+	return isset($plugins['disablequotemedia']);
+}
+
+// This function runs when the plugin is uninstalled.
+function ougc_disablequotemedia_uninstall()
+{
+	global $cache;
+
+	$PL || require_once PLUGINLIBRARY;
+
+	$PL->templates_delete('ougcdisablequotemedia');
+
+	// Delete version from cache
+	$plugins = (array)$cache->read('ougc_plugins');
+
+	if(isset($plugins['disablequotemedia']))
+	{
+		unset($plugins['disablequotemedia']);
+	}
+
+	if(!empty($plugins))
+	{
+		$cache->update('ougc_plugins', $plugins);
+	}
+	else
+	{
+		$cache->delete('ougc_plugins');
+	}
 }
 
 // Hook: parse_message_me_mycode
@@ -98,9 +187,11 @@ function ougc_disablequotemedia_simple($matches)
 		return $matches[0];
 	}
 
-	global $lang;
+	global $lang, $mybb, $templates;
 
-	$replace = "<blockquote class=\"mycode_quote\"><cite>$lang->quote</cite>$1</blockquote>\n";
+	$replace = eval($templates->render('ougcdisablequotemedia', 1, 0));
+
+	//$replace = "<blockquote class=\"mycode_quote\"><cite>$lang->quote</cite>$1</blockquote>\n";
 
 	$message = preg_replace(OUGC_DISABLEQUOTEMEDIA_PATTERN, $replace, $matches[0]);
 
