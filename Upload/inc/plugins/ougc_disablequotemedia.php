@@ -1,6 +1,5 @@
 <?php
 
-
 /***************************************************************************
  *
  *    OUGC Disable Quotes Media plugin (/inc/plugins/ougc_disablequotemedia.php)
