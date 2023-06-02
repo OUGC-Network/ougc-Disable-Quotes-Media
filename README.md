@@ -1,6 +1,6 @@
 <p align="center">
     <a href="" rel="noopener">
-        <img width="979px" height="979px" src="https://github.com/OUGC-Network/OUGC-Disable-Quotes-Media/assets/1786584/56487894-7247-46f2-be33-a9dc68d9baed" alt="Project logo">
+        <img width="700px" height="700px" src="https://github.com/OUGC-Network/OUGC-Disable-Quotes-Media/assets/1786584/56487894-7247-46f2-be33-a9dc68d9baed" alt="Project logo">
     </a>
 </p>
 
@@ -38,7 +38,7 @@
 
 ## 🚀 About <a name = "about"></a>
 
-OUGC Disable Quotes Media effortlessly enhances readability by converting image and video embeds within quoted content into convenient links, preventing clutter and improving the overall aesthetic of your forum. Say goodbye to messy threads and hello world to a more organized and visually appealing discussion platform with clutter-fee posts.
+OUGC Disable Quotes Media effortlessly enhances readability by converting image and video embeds within quoted content into convenient links, preventing clutter and improving the overall aesthetic of your forum. Say goodbye to messy threads and hello world to a more organized and visually appealing discussion platform with clutter-free posts.
 
 [Go up to Table of Contents](#table_of_contents)
 
