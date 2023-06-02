@@ -82,7 +82,9 @@ function ougc_disablequotemedia_activate(): void
 {
     global $PL, $cache, $lang;
 
-    if ($fileExists = file_exists(PLUGINLIBRARY) && !($PL instanceof PluginLibrary)) {
+    $fileExists = file_exists(PLUGINLIBRARY);
+
+    if ($fileExists && !($PL instanceof \PluginLibrary)) {
         require_once PLUGINLIBRARY;
     }
 
