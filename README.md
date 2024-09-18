@@ -86,7 +86,9 @@ Follow the next steps in order to update your copy of this plugin.
 The following is a list of templates available for this plugin.
 
 - `ougcdisablequotemedia`
-	- _front end_; used when parsing simple quotes.  The [core equivalent](https://github.com/mybb/mybb/blob/bc03b9be63cf2f1c31b672f16d64552e4f0736d7/inc/class_parser.php#L875) for this is hard-coded.
+	- _front
+	  end_; used when parsing simple quotes. The [core equivalent](https://github.com/mybb/mybb/blob/bc03b9be63cf2f1c31b672f16d64552e4f0736d7/inc/class_parser.php#L875)
+	  for this is hard-coded.
 
 [Go up to Table of Contents](#table_of_contents)
 
